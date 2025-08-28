@@ -21,8 +21,19 @@ async def command_start_handler(message: Message, state: FSMContext) -> None:
 @dp.callback_query(UserState.choose_lang)
 async def set_user_language_handler(call: CallbackQuery, state: FSMContext):
     language = call.data
+    data = {
+        'uz': "Kerakli topikni kiriting",
+        'ru': "Введите желаемую тему.",
+        'en': 'types the topic that you need'
+    }
+    call_data = {
+        'uz': "Til o'rnatildi",
+        'ru': "Язык изменен",
+        'en': 'Language changed'
+    }
     await state.update_data({'lang':  language})
-
+    await call.answer(call_data[language])
+    await call.message.answer(data[language])
 
 
 @dp.message(UserState.choose_lang)
